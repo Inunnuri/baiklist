@@ -1,0 +1,37 @@
+{
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build"
+    },
+    "devDependencies": {
+        "autoprefixer": "^10.4.20",
+        "axios": "^1.6.4",
+        "flowbite": "^2.4.1",
+        "laravel-echo": "^1.16.1",
+        "laravel-vite-plugin": "^1.0",
+        "postcss": "^8.4.40",
+        "pusher-js": "^8.4.0-rc2",
+        "tailwindcss": "^3.4.7",
+        "vite": "^5.0"
+    },
+    "name": "baiklist",
+    "version": "1.0.0",
+    "description": "<p align=\"center\"><a href=\"https://laravel.com\" target=\"_blank\"><img src=\"https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg\" width=\"400\" alt=\"Laravel Logo\"></a></p>",
+    "main": "vite.config.js",
+    "directories": {
+        "test": "tests"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@fullcalendar/core": "^6.1.15",
+        "@fullcalendar/daygrid": "^6.1.15",
+        "@fullcalendar/interaction": "^6.1.15",
+        "noty": "^3.2.0-beta-deprecated",
+        "sweetalert2": "^11.6.13",
+        "xml2js": "^0.6.2"
+    }
+}

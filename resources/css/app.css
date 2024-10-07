@@ -1,0 +1,148 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.navbar {
+    position: fixed;
+    top: 20;
+    left: 0;
+    width: 100%;
+    transition: background-color 0.3s;
+    border-bottom: 1px solid gray;
+    z-index: 100;
+}
+
+.navbar.scrolled {
+    background-color: #082f49;
+    top: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+.flex {
+    display: flex;
+}
+
+@media (max-width: 768px) {
+    #calendar {
+        width: 100%;
+        font-size: 12px; /* Adjust font size for smaller screens */
+    }
+}
+/* 
+Berikut adalah beberapa class yang sering digunakan oleh FullCalendar untuk menampilkan event:
+.fc-event - Untuk styling umum event.
+.fc-event-title - Untuk styling judul event (jika tersedia).
+.fc-daygrid-day-number - Untuk styling nomor hari dalam tampilan bulan */
+
+/* nama bulan */
+.fc-toolbar-title {
+    font-size: 30px;
+    color: white;
+    background-color: rgb(13, 83, 39);
+    padding: 4px;
+    border-radius: 4px !important;
+}
+
+/* nama hari */
+.fc-col-header-cell {
+    font-size: 16px;
+    color: white;
+    background-color: #cf7d89;
+}
+
+.fc-daygrid-day-number {
+    font-size: 18px;
+    color: #2da1d2;
+}
+
+/* Warna untuk akhir pekan */
+.fc-day-sun {
+    background-color: rgba(255, 0, 0, 0.5);
+    color: rgb(22, 21, 21);
+}
+
+.fc-event {
+    white-space: normal; /* Allow text to wrap */
+    overflow: visible; /* Ensure text is not cut off */
+    background-color: rgb(249 250 251);
+    color: blueviolet;
+    word-wrap: break-word; /* Memecah kata yang panjang */
+    word-break: break-word; /* Pecahkan kata yang panjang jika perlu */
+    height: auto !important; /* Pastikan event dapat memperbesar tinggi */
+}
+
+.fc-event.task-completed {
+    text-decoration: line-through;
+    color: #8f8c8c; /* Warna warna text */
+}
+
+.fc-button.fc-today-button {
+    background-color: #a71616 !important;
+    border: 1px solid white !important;
+    border-radius: 4px !important; /* Sudut membulat pada tombol */
+}
+
+.fc-button.fc-today-button:hover {
+    background-color: #e79393 !important;
+    border-color: #e79393 !important;
+}
+
+.fc-button.fc-dayGridMonth-button {
+    background-color: #075985 !important;
+    color: white !important;
+    border: 1px solid white !important;
+    border-radius: 4px !important;
+}
+.fc-button.fc-dayGridMonth-button:hover {
+    background-color: #38bdf8 !important;
+    border-color: #38bdf8 !important;
+}
+.fc-button.fc-timeGridWeek-button {
+    background-color: #078531 !important;
+    color: white !important;
+    border: 1px solid white !important;
+    border-radius: 4px !important;
+}
+.fc-button.fc-timeGridWeek-button:hover {
+    background-color: #49f67d !important;
+    border-color: #49f67d !important; /* Border saat hover */
+}
+.fc-button.fc-timeGridDay-button {
+    background-color: #e6e607 !important;
+    color: white !important;
+    border: 1px solid white !important;
+    border-radius: 4px !important;
+}
+.fc-button.fc-timeGridDay-button:hover {
+    background-color: #eeeed9 !important;
+    border-color: #eeeed9 !important;
+}
+
+/* tampilan mobile */
+@media (max-width: 768px) {
+    .fc-toolbar-title {
+        font-size: 5px;
+        text-align: center;
+        padding: 2px;
+    }
+    .fc-col-header-cell {
+        font-size: 12px;
+    }
+    .fc-daygrid-day-number {
+        font-size: 14px;
+    }
+    .fc-event-time {
+        display: none; /* Sembunyikan waktu dari event saat mobile */
+    }
+}
+
+.unread {
+    font-weight: bold;
+}
+.read {
+    font-weight: normal;
+    color: gray;
+}
