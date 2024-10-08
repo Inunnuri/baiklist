@@ -16,10 +16,6 @@ class LoginController extends Controller
         return view('user.login', compact('title'));
     }
 
-    public function form(){
-        return view ('user.login');
-    }
-
     public function login(Request $request){
         // validate request
         $request->validate([

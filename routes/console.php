@@ -1,5 +1,6 @@
 <?php
 
+//  jika kamu membuat perintah kustom untuk menjalankan tugas tertentu, kamu bisa mendefinisikannya di sini.
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Console\Scheduling\Schedule;

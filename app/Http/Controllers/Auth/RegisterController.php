@@ -19,9 +19,9 @@ class RegisterController extends Controller
     public function register(Request $request){
         $this->validator($request->all())->validate();
         $user = $this->create($request->all());
-/** @var \Illuminate\Auth\AuthManager $auth */
-$auth = auth();
-$auth->login($user);
+       /** @var \Illuminate\Auth\AuthManager $auth */
+        $auth = auth();
+        $auth->login($user);
         return redirect()->route('home');
     }
 

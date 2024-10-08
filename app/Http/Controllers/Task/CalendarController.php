@@ -19,21 +19,21 @@ class CalendarController extends Controller
         
 
          // Ambil tanggal dari query string
-    $date = $request->query('due_date');
+        $date = $request->query('due_date');
 
-    // Mengambil tasks dari database sesuai dengan tanggal jika tersedia
-    if ($date) {
+        // Mengambil tasks dari database sesuai dengan tanggal jika tersedia
+        if ($date) {
         // Filter tugas berdasarkan tanggal
         $tasks = Task::where('user_id', $user->id)
             ->whereDate('due_date', $date)
             ->orderBy('due_date')
             ->get();
-    } else {
+        } else {
         // Ambil semua tugas jika tidak ada tanggal
         $tasks = Task::where('user_id', $user->id)
             ->orderBy('due_date')
             ->get();
-    }
+        }
 
         // Format data untuk kalender
         $calendarData = $tasks->map(function($task) {

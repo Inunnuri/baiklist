@@ -13,7 +13,6 @@ use App\Http\Controllers\Task\CalendarController;
 
 //Route login
 Route::get('login',[LoginController::class, 'index'])->name('login');
-Route::get('login/form',[LoginController::class, 'form'])->name('login.form');
 Route::post('login/submit',[LoginController::class, 'login'])->name('login.submit');
 
 //Route logout
