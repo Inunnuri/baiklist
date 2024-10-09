@@ -122,17 +122,17 @@
                                         <!-- Title -->
                                         <div class="mb-4">
                                             <label for="title" class="block text-sm font-medium text-gray-700 dark:text-white">Title</label>
-                                            <input type="text" id="title" name="title" required class="mt-1 block w-full p-2 dark:bg-gray-400 border border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500" value="{{old($task->title ?? '')}}">
+                                            <input type="text" id="title" name="title" required class="mt-1 block w-full p-2 dark:bg-gray-400 border border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500" value="{{ old('title', $task->title ?? '') }}">
                                         </div>
                                           <!-- Description -->
                                           <div class="mb-4">
                                             <label for="description" class="block text-sm font-medium text-gray-700 dark:text-white">Description</label>
-                                            <textarea id="description" name="description" rows="3" class="dark:bg-gray-400 mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500" placeholder="description if you want"></textarea>
+                                            <textarea id="description" name="description" rows="3" class="dark:bg-gray-400 mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500" value="{{ old('description', $task->description ?? '') }}"placeholder="description if you want" ></textarea>
                                           </div>
                                         {{-- due_date --}}
                                         <div class="mb-4">
                                             <label for="due_date" class="block text-sm font-medium text-gray-700 dark:text-white">Due Date</label>
-                                            <input type="datetime-local" id="due_date" name="due_date" class="dark:bg-gray-400 mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500" value="{{old($task->due_date ?? '')}}">
+                                            <input type="datetime-local" id="due_date" name="due_date" class="dark:bg-gray-400 mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500" value="{{old('due_date',$task->due_date ?? '')}}">
                                         </div>
                                           <!-- Frequency -->
                                         <div class="mb-4">

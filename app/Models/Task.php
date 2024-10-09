@@ -37,7 +37,11 @@ class Task extends Model
         return $this->belongsTo(Frequency::class);
     }
 
-    
+    public function notifications()
+    {
+        return $this->morphMany(Notification::class, 'notifiable');
+    }
+
     
 }
 

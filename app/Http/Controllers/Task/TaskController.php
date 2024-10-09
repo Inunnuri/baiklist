@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Task;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
 use App\Models\Task;
 use App\Models\Status;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Carbon;
-use App\Jobs\SendTaskReminder;
 use App\Events\TaskUpdated;
+use App\Models\Notification;
+use Illuminate\Http\Request;
+use App\Jobs\SendTaskReminder;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -19,7 +20,6 @@ class TaskController extends Controller
     $users = Auth::user();
     $title = 'Your Tasks, ' . $users->name;
     $tasks = Task::where('user_id', $users->id);
-    // urutkan sesuai yang terbaru
     $tasks = $tasks->orderBy('due_date', 'desc');
 
     // Filter tasks berdasarkan tanggal kadaluarsa
@@ -47,6 +47,7 @@ class TaskController extends Controller
         $statusId = $request->input('status_id');
         $tasks->where('status_id', $statusId);
     }
+    
     $filteredTasks = $tasks->get();
 
 
@@ -60,6 +61,11 @@ class TaskController extends Controller
             }
         }
     }
+    // diffInSeconds($task->reminder_at, false): Menghitung selisih antara waktu saat ini dan waktu yang ditentukan dalam reminder_at dalam detik.
+    // false berarti hasilnya akan berupa nilai negatif, yang menandakan bahwa pengingat seharusnya sudah dikirim sebelumnya.
+    //if ($reminderDelay > 0): Memeriksa apakah nilai $reminderDelay lebih besar dari 0. Jika lebih besar dari 0, ini berarti waktu pengingat belum terlewat, dan pengingat dapat dijadwalkan untuk dikirim.
+    //->delay($reminderDelay): Metode ini digunakan untuk menentukan bahwa pekerjaan ini harus dijadwalkan dengan penundaan waktu yang ditentukan dalam $reminderDelay.
+
     $notifications = Auth::user()->notifications;
 
 
@@ -70,8 +76,8 @@ class TaskController extends Controller
                                            return $tasks->count();
                                        });
 
-    // Ambil semua status dari tabel statuses
-    $statuses = Status::all();
+    //groupBy digunakan untuk mengelompokkan koleksi $filteredTasks berdasarkan nilai dari kolom status_id
+    //map digunakan untuk memodifikasi koleksi yang dihasilkan dari groupBy.
 
 
 
@@ -88,7 +94,7 @@ class TaskController extends Controller
     //push() adalah metode dari Collection Laravel yang menambahkan item ke dalam koleksi $dates
 
 
-    return view('tasks', compact('title','filteredTasks','taskCountByStatus', 'statuses', 'startOfMonth','endOfMonth', 'dates', 'notifications'));
+    return view('tasks', compact('title','filteredTasks','taskCountByStatus', 'startOfMonth','endOfMonth', 'dates', 'notifications'));
 }
 
         public function form(){
@@ -107,14 +113,16 @@ class TaskController extends Controller
         $request->validate([
             'title' =>'required|string|max:255',
             'description' =>'nullable|string|max:255',
-            'due_date' => 'required|date_format:Y-m-d\TH:i', //Input datetime-local di HTML memerlukan format ini
+            'due_date' => 'required|date_format:Y-m-d\TH:i', //Input datetime-local di HTML5 memerlukan format ini
             'frequency_id' => 'required|exists:frequencies,id',
             'category_id' => 'required|exists:categories,id',
             'status_id' => 'required|exists:statuses,id',
             'calendar_id' => 'required|exists:calendars,id'
         ]);
-        // Hitung waktu pengingat 24 jam sebelum due_date
+        
+        //due_date dari request diubah menjadi objek Carbon (library untuk manipulasi tanggal di Laravel).
         $dueDate = Carbon::createFromFormat('Y-m-d\TH:i', $request->input('due_date'));
+        // Hitung waktu pengingat 24 jam sebelum due_date
         $reminderAt = $dueDate->copy()->subHours(24); // Gunakan copy() untuk menjaga $dueDate tidak terpengaruh
 
         $user = Auth::user();
@@ -136,18 +144,12 @@ class TaskController extends Controller
     ]);
         Log::info('Task saved successfully');
 
-         // Hitung delay
-    $now = Carbon::now();
-    $delay = $reminderAt->diffInSeconds($now);
+    // menjadwalkan pengiriman notifikasi
+    SendTaskReminder::dispatch($task);
+    //pastikan di SendTaskReminder nya menggunakan trait Dispatchable
 
-    // Dispatch job dengan delay
-    SendTaskReminder::dispatch($task)->delay(now()->addSeconds($delay));
-
-         // Broadcast event
-         broadcast(new TaskUpdated($task));
-
-        return redirect()->route('tasks.index')->with('success','Task has been added successfully');
-    }
+    return redirect()->route('tasks.index')->with('success','Task has been added successfully');
+}
 
 
 
@@ -173,7 +175,12 @@ class TaskController extends Controller
         if(!$task || $task->user_id != $user->id){
             return redirect()->route('tasks.index')->with('error','Task not found');
         }
-         // Perbarui task dengan data baru
+
+        // Simpan tanggal jatuh tempo lama
+         // Ambil oldDueDate sebagai objek Carbon
+        $oldDueDate = Carbon::parse($task->due_date);
+        $newDueDate = $dueDate;
+
         $task->update([
         'title' => $request->input('title'),
         'description' => $request->input('description'),
@@ -186,18 +193,20 @@ class TaskController extends Controller
         ]);
         Log::info('Task updated successfully');
 
-         // Hitung delay untuk notification
-        $now = Carbon::now();
-        $delay = $reminderAt->diffInSeconds($now);
+        // Jika due_date berubah, update notifikasi, isSameDay adalah cara yang tepat untuk membandingkan dua objek Carbon berdasarkan tanggal.
+         // Jika due_date berubah, hapus notifikasi lama dan buat notifikasi baru
+         if (!$oldDueDate->isSameDay($newDueDate)) {
+            // Hapus notifikasi lama
+            $deleted = Notification::where('data->task_id', $task->id)->delete();
+            // Log::info('Notifications deleted: ' . $deleted);
+            
+            // Kirim notifikasi baru
+            SendTaskReminder::dispatch($task);
+        }
+        
 
-       // Dispatch job dengan delay
-       SendTaskReminder::dispatch($task)->delay(now()->addSeconds($delay));
-
-         // Broadcast event
-         broadcast(new TaskUpdated($task));
         return redirect()->route('tasks.index')->with('success', 'Update Task successfully!');
     }
-
 
 
 
@@ -206,6 +215,7 @@ class TaskController extends Controller
         if(!$user){
             return redirect()->route('login');
         };
+
         $task = Task::find($id);
         if(!$task){
             return response()->json(['success' => false]);
@@ -213,6 +223,10 @@ class TaskController extends Controller
         if($task->user_id !== Auth::id()){
             return response()->json(['success' => false]);
         }
+
+        // Hapus notifikasi yang terkait dengan task ini
+        Notification::where('data->task_id', $task->id)->delete(); // Menghapus notifikasi berdasarkan data
+
         $task->delete();
         return response()->json(['success' => true]);
     }
@@ -232,11 +246,7 @@ class TaskController extends Controller
         ]);
     
         $task->status_id = $request->input('status_id');
-        $task->user_id = Auth::id();
         $task->save();
-
-         // Broadcast event
-         broadcast(new TaskUpdated($task));
 
         return response()->json(['success' => true]);
     }
@@ -250,3 +260,5 @@ class TaskController extends Controller
 // T: Huruf "T" sebagai separator antara tanggal dan waktu
 // H: Jam (2 digit, 24-jam, misalnya 13)
 // i: Menit (2 digit, misalnya 45)
+
+// done

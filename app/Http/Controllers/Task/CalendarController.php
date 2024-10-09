@@ -44,14 +44,7 @@ class CalendarController extends Controller
          ];
         });
 
-
-        // Debugging: Output tasks data
-        // Log::info('Tasks:', $tasks->toArray());
-        
-        if ($request->ajax()) {
-            return response()->json($calendarData);
-        }
         return view('calendar', compact('title', 'calendarData', 'date'));
     }
-
+//done
 }

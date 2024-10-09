@@ -86,7 +86,7 @@
                                   <li>
                                       @if(isset($data['task_id']) && $notification->notifiable_id === Auth::id())
                                           <a href="{{ route('notifications.read', ['id' => $notification->id]) }}">
-                                            <strong class="{{ $isRead ? 'read' : 'unread' }}">{{ $data['task_title'] ?? 'No Title' }} - Due: {{ \Carbon\Carbon::parse($data['task_due'])->translatedFormat('j F Y') }}
+                                            <strong class="dark:text-white {{ $isRead ? 'read' : 'unread' }}">{{ $data['task_title'] ?? 'No Title' }} - Due: {{ \Carbon\Carbon::parse($data['task_due'])->translatedFormat('j F Y') }}
                                             </strong>
                                               <br>
                                           </a>
