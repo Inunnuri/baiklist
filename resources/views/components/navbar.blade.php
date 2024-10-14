@@ -148,7 +148,7 @@
                         @php
                           $user = Auth::user();
                         @endphp
-                        <a href="{{route('profile')}}"><div class="text-base font-medium text-gray-800 dark:text-white hover:text-primary-400 dark:hover:text-primary-400 mt-2">{{$user->name}}</div></a>
+                        <a href="{{route('profile', ['id'=>Auth::id()])}}"><div class="text-base font-medium text-gray-800 dark:text-white hover:text-primary-400 dark:hover:text-primary-400 mt-2">{{$user->name}}</div></a>
                         <div class="text-sm font-medium text-gray-400">{{$user->email}}</div>
                       </div>
                     </div>

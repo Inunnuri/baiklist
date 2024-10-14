@@ -7,8 +7,8 @@
   <div class="bg-wallpaper bg-center bg-cover min-h-[550px] shadow-xl rounded-lg mt-2">
     <div class="container px-20 py-5">
       <div class="flex flex-col items-start">
-        <img src="{{ asset('storage/' . $profile->profile_photo) }}" alt="photo profile" class="w-48 h-48 object-cover rounded-full">
-        <h2 class="text-medium font-semibold mt-2 mb-5">Junaidi</h2>
+        <img src="{{$profile->profile_photo ? asset('storage/' . $profile->profile_photo) : asset('storage/default.jpg') }}" alt="photo profile" class="w-48 h-48 object-cover rounded-full">
+        <h2 class="text-medium font-semibold mt-2 mb-5">{{$user->username}}</h2>
       </div>
       <hr class="border">
       <div class="inline-flex mt-4 mb-2">
@@ -17,7 +17,7 @@
       </div>
       <div class="flex mb-2">
         <strong class="w-48">Email:</strong>
-        <span>{{$profile->email}}</span>
+        <span>{{$user->email}}</span>
       </div>
       <div class="flex mb-2">
         <strong class="w-48">Phone Number:</strong>
@@ -53,6 +53,7 @@
               </div>
               <div class="w-full">
                 <label for="email" class="font-medium dark:text-white">Email</label>
+                <p class="text-sm text-gray-400">kamu akan mengganti email untuk login</p>
                 <input type="email" id="email" class="@error ('email') is-invalid @enderror w-full px-3 py-2 text-sm dark:bg-gray-400 border border-gray-300 rounded-md focus:outline-none focus:ring-primary-600 focus:border-primary-600" name="email" value="{{ auth()->user()->email }}">
                 @error('email')
                 <p class="text-sm text-red-500">{{ $message }}</p>

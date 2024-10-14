@@ -35,7 +35,7 @@ class LoginController extends Controller
             return redirect()->route('home');
         } else {
             // if login fails, redirect back to login page with error message
-            return redirect()->route('login.form')->with('error', 'Invalid email or password');
+            return redirect()->route('login')->with('error', 'Invalid email or password');
         }
     }
 

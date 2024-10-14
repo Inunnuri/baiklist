@@ -26,7 +26,7 @@ Route::post('register/submit',[RegisterController::class, 'register'])->name('re
 Route::get('/',[HomeController::class, 'index'])->name('home');
 
 //Route Profile
-Route::get('profile',[ProfileController::class, 'form'])->name('profile');
+Route::get('profile/{id}',[ProfileController::class, 'form'])->name('profile');
 Route::post('profile/update',[ProfileController::class, 'update'])->name('profile.update');
 
 // Route my tasks

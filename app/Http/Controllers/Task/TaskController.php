@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Task;
 
 use App\Models\Task;
-use App\Models\Status;
-use App\Events\TaskUpdated;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Jobs\SendTaskReminder;
