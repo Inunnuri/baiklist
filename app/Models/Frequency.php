@@ -13,3 +13,4 @@ class Frequency extends Model
         return $this->hasMany(Task::class,'frequency_id');
     }
 }
+// done

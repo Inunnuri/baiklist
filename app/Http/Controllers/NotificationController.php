@@ -27,7 +27,7 @@ class NotificationController extends Controller
 
 // menandai notifikasi sudah dibaca sesuai reminder_at hari ini atau yang sudah lewat sesuai pengaturan notif yang muncul di navbar
 public function markAllAsRead(){
-  $user = Auth::user();
+  $user = Auth::user(); 
   // Ambil notifikasi yang belum dibaca dan reminder_at adalah hari ini atau sebelumnya
   $notificationsToMark = $user->unreadNotifications->filter(function ($notification) {
     $reminderAt = isset($notification->data['reminder_at']) ? \Carbon\Carbon::parse($notification->data['reminder_at']) : null;
@@ -52,7 +52,9 @@ foreach ($notificationsToMark as $notification) {
 //menghapus notif sesuai yang sudah dibaca
 public function destroyAllRead()
 {
-    $userId = Auth::id();
+    $userId = Auth::id();//Hanya akan mendapatkan ID dari pengguna
+    //Gunakan Auth::user() ketika membutuhkan informasi lebih lengkap dari pengguna, seperti nama, email, atau atribut lainnya.
+  
     // Menghapus semua notifikasi yang sudah dibaca
     $deletedCount = Notification::where('notifiable_id', $userId)
         ->whereNotNull('read_at')
@@ -64,5 +66,5 @@ public function destroyAllRead()
 
     return redirect()->back()->with('info', 'Tidak ada notifikasi yang sudah dibaca untuk dihapus.');
 }
-
+//done
 }

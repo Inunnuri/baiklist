@@ -2,18 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Task extends Model
 {
-    use HasFactory;
+    // use HasFactory; tidak perlu karena tidak pakai data dummy maupun seeder
 
     protected $fillable = ['user_id','title', 'description','due_date','reminder_at', 'frequency_id', 'category_id', 'status_id', 'calendar_id'];
 
-    protected $dates = ['due_date'];
+    protected $dates = ['due_date'];//Properti $dates digunakan untuk mendefinisikan kolom yang harus diperlakukan sebagai objek Carbon secara otomatis, sehingga tidak perlu menggunakan Carbon:, contoh $oldDueDate = $task->due_date;
+    //contoh kalau manual: $oldDueDate = Carbon::parse($task->due_date);
+    //tapi jika data tetap string, pakai saja manual gpp
 
 
     //Eager Loading by Default
@@ -22,6 +22,7 @@ class Task extends Model
 
     public function user():BelongsTo{
         return $this->belongsTo(User::class);
+        //ditabel tasks harus punya user_id
     }
     
     public function category():BelongsTo{
@@ -40,9 +41,12 @@ class Task extends Model
     public function notifications()
     {
         return $this->morphMany(Notification::class, 'notifiable');
+        //morphMany(): Method ini mendefinisikan relasi one-to-many polymorphic. Artinya, satu Task dapat memiliki banyak notifikasi yang terkait dengannya.
+        //pastikan di model Notification pakai morphTo()
+        //Parameter 'notifiable' adalah nama yang digunakan untuk merujuk ke relasi ini. Ini berarti bahwa ketika Laravel melakukan query untuk mengambil notifikasi, ia akan mencari kolom notifiable_type dan notifiable_id dalam tabel notifications untuk menentukan model mana (misalnya, Task, User, atau model lain) yang terkait dengan notifikasi tersebut.
     }
 
-    
+    //done
 }
 
 

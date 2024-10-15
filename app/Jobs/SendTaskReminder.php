@@ -33,6 +33,7 @@ class SendTaskReminder implements ShouldQueue
     public function handle(): void
     {
         $user = User::find($this->task->user_id); // Ambil pengguna terkait dengan tugas ini
+        //ini akan mengisi notifiable_type nya adalah model User saat kamu mengirim notifikasi menggunakan $user->notify(new TaskReminderNotification($this->task));
     
         //jika due_date hari ini maka tidak dibuat kan notifikasi
         //Cek jika due_date adalah hari ini, pastikan mengonversi due_date yang berupa string menjadi objek Carbon.

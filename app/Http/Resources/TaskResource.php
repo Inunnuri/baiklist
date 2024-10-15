@@ -1,5 +1,5 @@
 <?php
-
+//untuk API
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
@@ -20,3 +20,4 @@ class TaskResource extends JsonResource
         ];
     }
 }
+

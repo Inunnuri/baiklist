@@ -13,7 +13,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class User extends Authenticatable
 {
     use HasFactory, HasApiTokens, Notifiable;
-
+    //Notifiable digunakan untuk agar user dapat menerima notifikasi
+    //buat notifikasi barunya di Jobs, Tidak harus menggunakan Jobs untuk membuat notifikasi.
+    //Tapi menggunakan Jobs/ queue, aplikasi dapat menangani lebih banyak permintaan tanpa memperlambat waktu respons.
 
     /**
      * The attributes that are mass assignable.
