@@ -219,6 +219,10 @@
                     </div>
                 </div>
             </div>
+            {{-- link pagination --}}
+            <div class="pagination mt-2">
+                {{ $filteredTasks->links() }}
+            </div>
         </div>
     </section>
 

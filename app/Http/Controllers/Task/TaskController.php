@@ -15,10 +15,11 @@ class TaskController extends Controller
 {
     public function index(Request $request)
 {
-    $users = Auth::user();
-    $title = 'Your Tasks, ' . $users->name;
-    $tasks = Task::where('user_id', $users->id);
-    $tasks = $tasks->orderBy('due_date', 'desc');
+    $user = Auth::user();
+    $title = 'Your Tasks, ' . $user->name;
+    // Ambil query dasar untuk tasks
+    $tasks = Task::where('user_id', $user->id)
+                  ->orderBy('due_date', 'desc');
 
     // Filter tasks berdasarkan tanggal kadaluarsa
     if ($request->has('due_date')) {
@@ -46,7 +47,7 @@ class TaskController extends Controller
         $tasks->where('status_id', $statusId);
     }
     
-    $filteredTasks = $tasks->get();
+    $filteredTasks = $tasks->paginate(5);
 
 
      //Looping untuk Menangani Pengingat (Reminder)

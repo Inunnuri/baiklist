@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -58,11 +57,7 @@ class User extends Authenticatable
     public function task(): HasMany{
         return $this->hasMany(Task::class, 'user_id');
     }
-
-    public function calendar(): HasMany{
-        return $this->hasMany(Calendar::class, 'user_id');
-    }
-
 }
+// done
 
 

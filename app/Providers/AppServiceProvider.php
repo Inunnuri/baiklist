@@ -4,8 +4,6 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
-use App\Models\Sanctum\PersonalAccessToken;
-use Laravel\Sanctum\Sanctum;
 use App\Models\Profile;
 use App\Models\User;
 use App\Models\Category;
@@ -30,9 +28,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Mengirim data profile ke semua view
+        // * artinya mengirim data ke semua view
         View::composer('*', function ($view) {
-            $view->with('profiles', Profile::all());
+            $view->with('profiles', Profile::all());//untuk menyimpan semua data, lebih baik gunakan nama variabel dalam bentuk jamak (profiles)
+            //di view gunakan $profiles
         });
         View::composer('*', function ($view) {
             $view->with('users', User::all());
@@ -55,7 +54,7 @@ class AppServiceProvider extends ServiceProvider
         View::composer('*', function ($view) {
             $view->with('notifications', Notification::all());
         });
-        // Sanctum::usePersonalAccessTokenModel(PersonalAccessToken::class);
 
     }
 }
+//done

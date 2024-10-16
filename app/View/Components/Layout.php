@@ -23,4 +23,7 @@ class Layout extends Component
     {
         return view('components.layout');
     }
+    //Closure: Mengindikasikan bahwa method ini dapat mengembalikan sebuah closure (fungsi anonim).
+    //Tanpa method render(), Laravel tidak tahu bagaimana cara merender komponen tersebut. Oleh karena itu, saat kamu mencoba menggunakan komponen ini dalam view dengan sintaks seperti <x-layout />, tidak akan ada output yang dihasilkan untuk komponen tersebut.
 }
+// done

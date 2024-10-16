@@ -68,11 +68,11 @@
               </button>
               <!-- Dropdown or modal for notifications -->
               <div class="hidden overflow-hidden z-50 my-4 max-w-sm text-base list-none bg-white rounded divide-y divide-gray-100 p-4 shadow-lg dark:divide-gray-600 dark:bg-gray-700" id="notification-dropdown">
-                      <div class="block py-2 px-4 mb-2 text-lg font-medium text-center text-gray-900 bg-primary-50 dark:bg-gray-700 dark:text-gray-400">
+                      <div class="block py-2 px-4 mb-2 text-m lg:text-lg font-medium text-center text-gray-900 bg-primary-50 dark:bg-gray-700 dark:text-gray-400">
                         Notifications
                       </div>
-                      <div>
-                        <ul class="text-m mt-2 mb-2">
+                      <div class="text-sm lg:text-base">
+                        <ul class="mt-2 mb-2">
                           @foreach(Auth::user()->notifications as $notification)
                               @php
                                   $data = is_string($notification->data) ? json_decode($notification->data, true) : $notification->data;
@@ -114,7 +114,7 @@
                           <form action="{{ route('notifications.delete' )}}" method="POST" style="display: inline;">
                             @csrf
                             @method ('DELETE')
-                            <button type="submit" class="bg-red-600 hover:bg-red-400 text-sm font-semibold text-gray-900 px-3 py-2 rounded-xl">Delete All Notifications</button>
+                            <button type="submit" class="bg-red-600 hover:bg-red-400 text-sm font-semibold text-gray-900 px-3 py-2 rounded-xl">Delete All Read Notifications</button>
                           </form>
                         </div>
                       </div>

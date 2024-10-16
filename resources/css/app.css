@@ -146,3 +146,16 @@ Berikut adalah beberapa class yang sering digunakan oleh FullCalendar untuk mena
     font-weight: normal;
     color: gray;
 }
+
+.pagination a:hover {
+    background-color: #bae6fd; /* Warna latar belakang saat hover */
+}
+
+.pagination a {
+    padding: 8px 12px; /* Spasi dalam tombol */
+    margin: 0 5px; /* Spasi antara tombol */
+    background-color: #0c4a6e; /* Warna latar belakang */
+    color: white; /* Warna teks */
+    border-radius: 5px; /* Sudut membulat */
+    text-decoration: none; /* Hapus garis bawah */
+}

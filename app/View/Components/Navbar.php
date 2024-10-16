@@ -24,3 +24,4 @@ class Navbar extends Component
         return view('components.navbar');
     }
 }
+// done
