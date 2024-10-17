@@ -2,15 +2,11 @@
     <nav class="navbar pt-1 lg:pt-4 pb-4 pl-10 pr-10">
       {{-- tampilkan pesan sukses --}}
       <div class="flex justify-end items-end">
-      @if (session('success'))
-      <div class="bg-primary-500 inline-block px-4 py-2 text-sm lg:text-lg lg:mb-2 text-white rounded-lg">
-        {{ session('success') }}
-      </div>
-      @elseif(session('info'))
-      <div class="bg-red-500 px-4 py-2 inline-block text-sm lg:text-lg lg:mb-2 text-white rounded-lg">
-        {{ session('info') }}
-      </div>
-      @endif
+        @if (session('success'))
+          <x-alert type="success" :message="session('success')" />
+        @elseif (session('info'))
+          <x-alert type="info" :message="session('info')" />
+        @endif
       </div>
 
 
