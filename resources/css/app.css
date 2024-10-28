@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* navbar */
 .navbar {
     position: fixed;
     top: 20;
@@ -17,20 +18,6 @@
     top: 0;
 }
 
-.hidden {
-    display: none;
-}
-
-.flex {
-    display: flex;
-}
-
-@media (max-width: 768px) {
-    #calendar {
-        width: 100%;
-        font-size: 12px; /* Adjust font size for smaller screens */
-    }
-}
 /* 
 Berikut adalah beberapa class yang sering digunakan oleh FullCalendar untuk menampilkan event:
 .fc-event - Untuk styling umum event.
@@ -121,7 +108,7 @@ Berikut adalah beberapa class yang sering digunakan oleh FullCalendar untuk mena
     border-color: #eeeed9 !important;
 }
 
-/* tampilan mobile */
+/* tampilan mobile Full calendar*/
 @media (max-width: 768px) {
     .fc-toolbar-title {
         font-size: 5px;
@@ -137,16 +124,13 @@ Berikut adalah beberapa class yang sering digunakan oleh FullCalendar untuk mena
     .fc-event-time {
         display: none; /* Sembunyikan waktu dari event saat mobile */
     }
+    #calendar {
+        width: 100%;
+        font-size: 12px; /* Adjust font size for smaller screens */
+    }
 }
 
-.unread {
-    font-weight: bold;
-}
-.read {
-    font-weight: normal;
-    color: gray;
-}
-
+/* pagination */
 .pagination a:hover {
     background-color: #bae6fd; /* Warna latar belakang saat hover */
 }
@@ -158,4 +142,42 @@ Berikut adalah beberapa class yang sering digunakan oleh FullCalendar untuk mena
     color: white; /* Warna teks */
     border-radius: 5px; /* Sudut membulat */
     text-decoration: none; /* Hapus garis bawah */
+}
+
+/* lainnya */
+.hidden {
+    display: none;
+}
+
+.flex {
+    display: flex;
+}
+
+.unread {
+    font-weight: bold;
+}
+.read {
+    font-weight: normal;
+    color: gray;
+}
+
+.tooltip-text {
+    display: none; /* Sembunyikan tooltip secara default */
+    position: absolute;
+    bottom: 10%; /* Posisi tooltip di atas elemen */
+    left: 55%;
+    transform: translateX(-50%);
+    color: black; /* Warna teks tooltip */
+    font-style: italic;
+    font-weight: bold;
+    font-size: smaller;
+    padding: 5px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    z-index: 10; /* Pastikan tooltip di atas elemen lain */
+}
+
+#theme-toggle:hover .tooltip-text {
+    display: block; /* Tampilkan tooltip saat tombol dihover */
+    opacity: 1; /* Ubah opacity agar terlihat */
 }

@@ -2,16 +2,17 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\View;
-use App\Models\Profile;
-use App\Models\User;
-use App\Models\Category;
-use App\Models\Calendar;
-use App\Models\Frequency;
-use App\Models\Status;
 use App\Models\Task;
+use App\Models\User;
+use App\Models\Status;
+use App\Models\Profile;
+use App\Models\Calendar;
+use App\Models\Category;
+use App\Models\Frequency;
 use App\Models\Notification;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -30,9 +31,10 @@ class AppServiceProvider extends ServiceProvider
     {
         // * artinya mengirim data ke semua view
         View::composer('*', function ($view) {
-            $view->with('profiles', Profile::all());//untuk menyimpan semua data, lebih baik gunakan nama variabel dalam bentuk jamak (profiles)
+            $view->with('profiles', Profile::where('user_id', Auth::id())->first());
+        });//untuk menyimpan semua data, lebih baik gunakan nama variabel dalam bentuk jamak (profiles)
             //di view gunakan $profiles
-        });
+            
         View::composer('*', function ($view) {
             $view->with('users', User::all());
         });
